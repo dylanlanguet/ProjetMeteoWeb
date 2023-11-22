@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/favicon.ico" sizes="64x64" type="image/x-icon">
+
+    <title>Application Météo</title>
 </head>
 <body>
+    <div class="card">
+        <div class="weather.loading">
+            <h2 id="cityName" class="city">Nom de la ville</h2>
+            <h1 id="temperature" class="temp">Température: </h1>
+            <div class="flex">
+                <div id="weatherDescription" class="description">Description: </div>
+            </div>
+            <div id="humidity" class="humidity">Humidité: </div>
+            <div id="wind" class="wind">Vent: </div>
+        </div>
+    </div>
 
+    <script type="module" src="meteo.js"></script>
 </body>
 </html>
