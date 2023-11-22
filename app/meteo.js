@@ -1,5 +1,4 @@
 import { config } from "./config.js";
-
 let infoCity;
 
 // Fonction pour récupérer les données météo depuis l'API
@@ -8,7 +7,7 @@ async function getWeatherData(city) {
     const TOKEN = config.TOKEN;
     
     // Utilisation de fetch pour effectuer la requête à l'API
-    let response = await fetch(`https://api.meteo-concept.com/api/forecast/nextHours?token=${TOKEN}&insee=${city.insee}`).catch(error => console.log('error', error));
+    let response = await fetch(`https://api.meteo-concept.com/api/observations/around?token=${TOKEN}&insee=${city.insee}`).catch(error => console.log('error', error));
 
     // Vérification si la requête a réussi
     if (response.ok) {
@@ -16,7 +15,7 @@ async function getWeatherData(city) {
       const data = await response.json();
 
       // Appel de la fonction pour afficher les données dans l'interface
-      displayWeatherData(data);
+      displayWeatherData(data[0]);
     } else {
       console.error("Erreur lors de la récupération des données météo.");
     }
@@ -35,11 +34,11 @@ async function displayWeatherData(data) {
   const wind = document.getElementById("wind");
 
   // Affichage des données dans l'interface
-  cityNameElement.textContent = data.city.name;
-  temperatureElement.textContent = `${data.forecast[0].temp2m} °C`;
-  weatherDescriptionElement.textContent = `Le temps est ${config.WEATHER[data.forecast[0].weather]}`;
-  humidity.textContent = `Humidité: ${data.forecast[0].rh2m} %`;
-  wind.textContent = `Vent: ${data.forecast[0].wind10m} km/h`;
+  cityNameElement.textContent = data.station.city;
+  temperatureElement.textContent = `${data.observation.temperature.value} °C`;
+  weatherDescriptionElement.textContent = `${config.WEATHER[236]}`;
+  humidity.textContent = `Humidité: ${data.observation.humidity.value} %`;
+  wind.textContent = `Vent: ${data.observation.wind_s.value} km/h`;
 }
 
 // Appel à la fonction toutes les heures
@@ -53,6 +52,7 @@ fetch('./conf.json')
   .catch(error => {
     console.error('Erreur lors du chargement du fichier JSON:', error);
   });
+  
 setInterval(() => {
   fetch('./conf.json')
     .then(response => response.json())
